@@ -1,0 +1,9 @@
+body {
+	padding: 20px;
+	background-color: #d5f5ee;
+}
+
+#current_status {
+	border: 3px solid black;
+	border-radius: 5px;
+}

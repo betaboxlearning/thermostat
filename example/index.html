@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+
+<head>
+	<!-- The code inside the <head></head> tags allows us to use a few useful tools, like Bootstrap -->
+	<!-- and FontAwesome, to make our site look pretty really easily. -->
+	<script src="https://kit.fontawesome.com/c4a1958b39.js" crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+	<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+	<!-- This div, the "container", holds all the content of our page. -->
+	<div class="container">
+		<div class="row mb-3 text-center">
+			<div class="col-12">
+
+				<!-- Your website's title -->
+				<h1>Adam's Thermostat</h1>
+
+				<!-- Your website's subtitle. In this case, the location of our thermostat setup. -->
+				<h4><em>Location: Bearded Dragon Tank</em></h4>
+
+			</div>
+		</div>
+
+		<!-- This section displays the current status of our thermostat, with real-time -->
+		<!-- temperature and humidity. -->
+		<div class="row mb-5 text-center" >
+			<div class="col-md-8 offset-md-2" id="current_status">
+				<div class="row">
+					<div class="col-12">
+
+						<!-- The title for this section. -->
+						<h2>Current Status:</h2>
+
+					</div>
+					<div class="col-12">
+
+						<!-- A quick message letting users know they can refresh the page to get new values. -->			
+						<p><em>(refresh to update)</em></p>
+
+					</div>
+					<div class="col-6">
+						
+						<!-- This looks a little complicated, but let's break it down piece by piece. -->
+						<h1>
+
+							<!-- This <i> tag simply allows us to use a cool icon from FontAwesome. -->
+							<!-- In this case, we're using a thermometer icon. -->
+							<i class="fas fa-thermometer-three-quarters"></i>
+
+							<!-- This piece, "&nbsp;", is simply making sure we have a space between -->
+							<!-- our icon and the value. NBSP stands for "non-breakable space." -->
+							&nbsp;
+
+							<!-- Lastly, we have the data within a <span>, followed by &deg;F. -->
+							<!-- &deg; is similar to &nbsp;, except the "deg" stands for degrees. This -->
+							<!-- generates a degree symbol, which we follow with "F" for Farenheit. -->
+							<span id="temperature_current">73</span> &deg;F
+						</h1>
+					</div>
+
+					<div class="col-6">
+
+						<!-- And here we have almost the same thing as above, except for humidity. -->
+						<h1>
+							<!-- The <i> tag here gets us a water droplet icon, to represent humidity. -->
+							<i class="fas fa-tint"></i>
+
+							<!-- Another &nbsp;, which gives us a space between the icon and the value. -->
+							&nbsp;
+
+							<!-- Again, we have a <span> here for our value, followed this by by a percent sign. -->
+							<span id="humidity_current">46</span>%
+						</h1>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-12">
+				<h4>Past data:</h4>
+			</div>
+			<div class="col-12">
+				<table class="table">
+					<thead>
+						<th scope="col">Time</th>
+						<th scope="col">Temperature (&deg;F)</th>
+						<th scope="col">Humidity (%)</th>
+					</thead>
+					<tbody>
+						<tr>
+							<td>1-11-2020 4:58pm</td>
+							<td>78</td>
+							<td>45</td>
+						</tr>
+						<tr>
+							<td>1-11-2020 4:58pm</td>
+							<td>78</td>
+							<td>45</td>
+						</tr>
+						<tr>
+							<td>1-11-2020 4:58pm</td>
+							<td>78</td>
+							<td>45</td>
+						</tr>
+						<tr>
+							<td>1-11-2020 4:58pm</td>
+							<td>78</td>
+							<td>45</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+
+	</div>
+
+</body>
+
+</html>
