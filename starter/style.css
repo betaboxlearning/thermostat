@@ -1,0 +1,18 @@
+body {
+	padding: 20px;
+
+	/* feel free to change this color! */
+	background-color: grey;
+	/* you can find a list of available options here: */
+	/* https://www.w3schools.com/cssref/css_colors.asp */
+}
+
+#current_status {
+
+	/* again, feel free to change this color too! */
+	border: 3px solid black;
+	/* you can find a list of available options here: */
+	/* https://www.w3schools.com/cssref/css_colors.asp */
+	
+	border-radius: 5px;
+}
