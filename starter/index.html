@@ -39,6 +39,7 @@
 
 <body>
 
+	<!-- This section just sets up a few variable we'll need later. -->
 	<script>
 		var dtp = null;
 		var timearr = [];
@@ -79,7 +80,6 @@
 						<br/>
 
 						<div class="row">
-
 							<div class="col-6">
 								
 								<!-- This looks a little complicated, but let's break it down piece by piece. -->
@@ -120,13 +120,18 @@
 									<span id="humidity_current">{{hum}}</span>%
 								</h1>
 							</div>
-
 						</div>
-
 					</div>
 
+					<!-- This section is for our graph of temp/humidity vs. time. -->
 					<div class="col-12" id="history_graph">
 
+						<!-- You don't need to focus too much on this little section, but -->
+						<!-- here's what it does for each item in our data list: -->
+						<!-- 1) Converts the time from the way MySQL stores it to a way Javascript can understand -->
+						<!-- 2) Adds the date to a list so we can give it to our chart -->
+						<!-- 3) Adds the temperature to a list so we can give it to our chart -->
+						<!-- 4) Adds the humidity to a list so we can give it to our chart -->
 						{%for i in range(0, len)%}
 							<script>
 								dtp = '{{data[i][1]}}'.split(/[- :]/);
@@ -137,7 +142,15 @@
 							</script>
 						{%endfor%}
 
+						<!-- The <canvas> element is where our chart will be displayed. -->
+						<!-- Feel freee to change the width and height values if you'd like! -->
 						<canvas id="timeChart" width="400" height="150"></canvas>
+
+						<!-- This script generates the chart, using the canvas and the lists we created above. -->
+						<!-- This uses a Javascript library (similar to a Python package) called Chart.js, which -->
+						<!-- makes it really easy to create awesome charts and graphs. -->
+						<!-- If you'd like to learn more about Chart.js and what you can do with it, check out -->
+						<!-- their website: https://www.chartjs.org -->
 						<script>
 							var ctx = document.getElementById('timeChart');
 							var myChart = new Chart(ctx, {
@@ -157,7 +170,7 @@
 								},
 								options: {}
 							});
-						</script>					
+						</script>
 					</div>
 
 				</div>
@@ -169,7 +182,7 @@
 
 				<!-- A title for our table -->
 				<h4>Past data:</h4>
-
+				
 			</div>
 			<div class="col-12">
 				<table class="table">
@@ -221,9 +234,6 @@
 				</table>
 			</div>
 		</div>
-
 	</div>
-
 </body>
-
 </html>
