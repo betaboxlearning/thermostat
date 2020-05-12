@@ -5,20 +5,63 @@
 	<!-- and FontAwesome, to make our site look pretty really easily. -->
 	<script src="https://kit.fontawesome.com/c4a1958b39.js" crossorigin="anonymous"></script>
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-	<link rel="stylesheet" href="style.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js" crossorigin="anonymous"></script>
+	
+	<!-- Next up is <style>. The place we can change all the colors and fonts! -->
+	<style>
+
+		/* selecting "body" allows us to change everything on our page at once. */
+		body {
+
+			/* padding is just to add some extra space around the edges. */
+			padding: 20px;
+
+			/* background-color is just that: the background color! */
+			/* TODO: make this your own favorite color! */
+			background-color: lightblue;
+			/* you can find a list of available options here: */
+			/* https://www.w3schools.com/cssref/css_colors.asp */
+		}
+
+		/* "current_status" is the box on the website that shows the current temperature */
+		/* and humidity. feel free to change the border color here. */
+		#current_status {
+
+			/* feel free to change this color as well! */
+			border: 3px solid black;
+			/* you can find a list of available options here: */
+			/* https://www.w3schools.com/cssref/css_colors.asp */
+			
+			border-radius: 5px;
+		}
+	</style>
 </head>
 
 <body>
 
+	<script>
+		var dtp = null;
+		var timearr = [];
+		var timedata = [];
+		var humdata = [];
+	</script>
+
 	<!-- This div, the "container", holds all the content of our page. -->
 	<div class="container">
+
+		<!-- Throughout the code you'll see a lot of <div class="row"> elements. -->
+		<!-- These help us organize our page vertically. -->
 		<div class="row mb-3 text-center">
+
+			<!-- ...you'll also see a lot of <div class="col-x"> elements. -->
+			<!-- These help us organize our page horizontally. -->
 			<div class="col-12">
 
-				<!-- Your website's title. Add your name here! -->
-				<h1>NAME's Thermostat</h1>
+				<!-- Your website's title. TODO: Add your name here! -->
+				<h1>YOUR_NAME's Thermostat</h1>
 
 				<!-- Your website's subtitle. In this case, the location of our thermostat setup. -->
+				<!-- TODO: Change this to be your own location. -->
 				<h4><em>Location: YOUR_THERMOSTAT_LOCATION</em></h4>
 
 			</div>
@@ -27,90 +70,153 @@
 		<!-- This section displays the current status of our thermostat, with real-time -->
 		<!-- temperature and humidity. -->
 		<div class="row mb-5 text-center" >
-			<div class="col-md-8 offset-md-2" id="current_status">
+			<div class="col-md-8 offset-md-2">
 				<div class="row">
-					<div class="col-12">
+					<div class="col-12" id="current_status">
 
 						<!-- The title for this section. -->
 						<h2>Current Status:</h2>
+						<br/>
+
+						<div class="row">
+
+							<div class="col-6">
+								
+								<!-- This looks a little complicated, but let's break it down piece by piece. -->
+								<h1>
+
+									<!-- This <i> tag simply allows us to use a cool icon from FontAwesome. -->
+									<!-- In this case, we're using a thermometer icon. -->
+									<i class="fas fa-thermometer-three-quarters"></i>
+
+									<!-- This piece, "&nbsp;", is simply making sure we have a space between -->
+									<!-- our icon and the value. NBSP stands for "non-breakable space." -->
+									&nbsp;
+
+									<!-- Lastly, we have the data within a <span>, followed by &deg;F. -->
+									<!-- &deg; is similar to &nbsp;, except the "deg" stands for degrees. This -->
+									<!-- generates a degree symbol, which we follow with "F" for Farenheit. -->
+
+									<!-- We can access the current temperature variable by using its name -->
+									<!-- within two sets of curly braces, like this: {{temp}}. -->
+									<span id="temperature_current">{{temp}}</span> &deg;F
+								</h1>
+							</div>
+
+							<div class="col-6">
+
+								<!-- And here we have almost the same thing as above, except for humidity. -->
+								<h1>
+									<!-- The <i> tag here gets us a water droplet icon, to represent humidity. -->
+									<i class="fas fa-tint"></i>
+
+									<!-- Another &nbsp;, which gives us a space between the icon and the value. -->
+									&nbsp;
+
+									<!-- Again, we have a <span> here for our value, followed by a percent sign. -->
+
+									<!-- We can access the current temperature variable by using its name -->
+									<!-- within two sets of curly braces, like this: {{hum}}. -->
+									<span id="humidity_current">{{hum}}</span>%
+								</h1>
+							</div>
+
+						</div>
 
 					</div>
-					<div class="col-12">
 
-						<!-- A quick message letting users know they can refresh the page to get new values. -->			
-						<p><em>(refresh to update)</em></p>
+					<div class="col-12" id="history_graph">
 
+						{%for i in range(0, len)%}
+							<script>
+								dtp = '{{data[i][1]}}'.split(/[- :]/);
+								dtp[1]--;
+								timearr.push(new Date(...dtp));
+								tempdata.push(Number('{{data[i][2]}}'));
+								humdata.push(Number('{{data[i][3]}}'))
+							</script>
+						{%endfor%}
+
+						<canvas id="timeChart" width="400" height="150"></canvas>
+						<script>
+							var ctx = document.getElementById('timeChart');
+							var myChart = new Chart(ctx, {
+								type: 'line',
+								data: {
+									labels: timearr,
+									datasets: [{
+										label: 'Temperature',
+										data: tempdata,
+										borderWidth: 1
+									},
+									{
+										label: 'Humidity',
+										data: humdata,
+										borderWidth: 1
+									}]
+								},
+								options: {}
+							});
+						</script>					
 					</div>
-					<div class="col-6">
-						
-						<!-- This looks a little complicated, but let's break it down piece by piece. -->
-						<h1>
 
-							<!-- This <i> tag simply allows us to use a cool icon from FontAwesome. -->
-							<!-- In this case, we're using a thermometer icon. -->
-							<i class="fas fa-thermometer-three-quarters"></i>
-
-							<!-- This piece, "&nbsp;", is simply making sure we have a space between -->
-							<!-- our icon and the value. NBSP stands for "non-breakable space." -->
-							&nbsp;
-
-							<!-- Lastly, we have the data within a <span>, followed by &deg;F. -->
-							<!-- &deg; is similar to &nbsp;, except the "deg" stands for degrees. This -->
-							<!-- generates a degree symbol, which we follow with "F" for Farenheit. -->
-							<span id="temperature_current">73</span> &deg;F
-						</h1>
-					</div>
-
-					<div class="col-6">
-
-						<!-- And here we have almost the same thing as above, except for humidity. -->
-						<h1>
-							<!-- The <i> tag here gets us a water droplet icon, to represent humidity. -->
-							<i class="fas fa-tint"></i>
-
-							<!-- Another &nbsp;, which gives us a space between the icon and the value. -->
-							&nbsp;
-
-							<!-- Again, we have a <span> here for our value, followed this by by a percent sign. -->
-							<span id="humidity_current">46</span>%
-						</h1>
-					</div>
 				</div>
 			</div>
 		</div>
 
 		<div class="row">
 			<div class="col-12">
+
+				<!-- A title for our table -->
 				<h4>Past data:</h4>
+
 			</div>
 			<div class="col-12">
 				<table class="table">
+
+					<!-- The <thead> tag is for a table's header row. This usually appears in a bolder -->
+					<!-- font, and identifies what each column means. --> 
 					<thead>
+
+						<!-- Each individual header is within a <th> tag. In our case, we have headers -->
+						<!-- for Time, Temperature, and Humidity. -->
 						<th scope="col">Time</th>
-						<th scope="col">Temperature (&deg;F)</th>
-						<th scope="col">Humidity (%)</th>
+						<th scope="col"><i class="fas fa-thermometer-three-quarters"></i> Temperature (&deg;F)</th>
+						<th scope="col"><i class="fas fa-tint"></i> Humidity (%)</th>
 					</thead>
 					<tbody>
+
+						<!-- When using Flask, we can write for loops like this: -->
+						{%for i in range(0, len)%}
+						<!-- This will allow us to loop over all the entires in our database -->
+						<!-- and create a new table row for each one. -->
+
+						<!-- The <tr> tag represents "table row." -->
 						<tr>
-							<td>1-11-2020 4:58pm</td>
-							<td>78</td>
-							<td>45</td>
+
+							<!-- Within each <tr>, we have a serires of <td> tags, meaning "table data". -->
+							<!-- Each <td> represents one cell value. -->
+
+							<!-- Since our data is stored in a variable called "data", we can access each -->
+							<!-- individual entry with data[i]. Thanks to the for loop, the value of "i" -->
+							<!-- will start at 0 and increase by 1 for each row until we are finished. -->
+
+							<!-- The first cell in each row is the time. This is located in the 2nd slot, -->
+							<!-- which we can access with [1]. -->
+							<td>data[i][1]</td>
+
+							<!-- The second cell in each row is the temperature. This is located in the 3rd slot, -->
+							<!-- which we can access with [2]. -->
+							<td>data[i][2]</td>
+
+							<!-- The last cell in each row is the humidity. This is located in the 4th slot, -->
+							<!-- which we can access with [3]. -->
+							<td>data[i][3]</td>
 						</tr>
-						<tr>
-							<td>1-11-2020 4:58pm</td>
-							<td>78</td>
-							<td>45</td>
-						</tr>
-						<tr>
-							<td>1-11-2020 4:58pm</td>
-							<td>78</td>
-							<td>45</td>
-						</tr>
-						<tr>
-							<td>1-11-2020 4:58pm</td>
-							<td>78</td>
-							<td>45</td>
-						</tr>
+
+						<!-- Unlike regular Python, we need to end our for loops like so: -->
+						{%endfor%}
+
 					</tbody>
 				</table>
 			</div>
