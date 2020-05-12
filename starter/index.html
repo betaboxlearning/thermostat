@@ -43,7 +43,7 @@
 	<script>
 		var dtp = null;
 		var timearr = [];
-		var tempdata = [];
+		var timedata = [];
 		var humdata = [];
 	</script>
 
@@ -59,11 +59,11 @@
 			<div class="col-12">
 
 				<!-- Your website's title. TODO: Add your name here! -->
-				<h1>{{name}}'s Thermostat</h1>
+				<h1>YOUR_NAME's Thermostat</h1>
 
 				<!-- Your website's subtitle. In this case, the location of our thermostat setup. -->
 				<!-- TODO: Change this to be your own location. -->
-				<h4><em>Location: {{loc}}</em></h4>
+				<h4><em>Location: YOUR_THERMOSTAT_LOCATION</em></h4>
 
 			</div>
 		</div>
@@ -136,8 +136,7 @@
 							<script>
 								dtp = '{{data[i][1]}}'.split(/[- :]/);
 								dtp[1]--;
-								newdate = new Date(...dtp);
-								timearr.push('' + newdate.getHours() + ':' + newdate.getMinutes());
+								timearr.push(new Date(...dtp));
 								tempdata.push(Number('{{data[i][2]}}'));
 								humdata.push(Number('{{data[i][3]}}'))
 							</script>
@@ -217,15 +216,15 @@
 
 							<!-- The first cell in each row is the time. This is located in the 2nd slot, -->
 							<!-- which we can access with [1]. -->
-							<td>{{data[i][1]}}</td>
+							<td>data[i][1]</td>
 
 							<!-- The second cell in each row is the temperature. This is located in the 3rd slot, -->
 							<!-- which we can access with [2]. -->
-							<td>{{data[i][2]}}</td>
+							<td>data[i][2]</td>
 
 							<!-- The last cell in each row is the humidity. This is located in the 4th slot, -->
 							<!-- which we can access with [3]. -->
-							<td>{{data[i][3]}}</td>
+							<td>data[i][3]</td>
 						</tr>
 
 						<!-- Unlike regular Python, we need to end our for loops like so: -->
